@@ -78,6 +78,23 @@ export function organizationSchema() {
   }
 }
 
+/** The academy's Android app.
+ *  No aggregateRating: a rating for your own app on your own site is
+ *  self-serving and ineligible, same rule as the business reviews. */
+export function appSchema() {
+  return {
+    '@type': 'MobileApplication',
+    '@id': `${site.url}/#app`,
+    name: site.app.name,
+    operatingSystem: site.app.os,
+    applicationCategory: 'EducationalApplication',
+    installUrl: site.app.android,
+    url: site.app.android,
+    publisher: { '@id': ORG_ID },
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+  }
+}
+
 /** WebSite node — enables sitelinks search box eligibility. */
 export function websiteSchema() {
   return {
@@ -155,6 +172,7 @@ export function buildGraph({ meta, faqItems, course }) {
     organizationSchema(),
     websiteSchema(),
     founderSchema(),
+    appSchema(),
     breadcrumbSchema(meta),
     {
       '@type': 'WebPage',

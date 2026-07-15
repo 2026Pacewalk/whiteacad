@@ -3,6 +3,7 @@ import {
   ChevronRight, MapPin, Phone, Mail, Facebook, Instagram, MessageCircle,
   Map as MapIcon, FileCode2,
 } from 'lucide-react'
+import PlayStoreIcon from './PlayStoreIcon.jsx'
 import { site, courseList } from '../data/site.js'
 
 const quickLinks = [
@@ -66,6 +67,15 @@ export default function Footer() {
             <div className="footer__map">
               <iframe src={site.mapEmbed} title="Whitehawk Academy location on Google Maps" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             </div>
+
+            {/* Android app */}
+            <a className="app-badge" href={site.app.android} target="_blank" rel="noopener noreferrer">
+              <PlayStoreIcon size={26} />
+              <span>
+                <small>Download our app</small>
+                <strong>Get it on Google Play</strong>
+              </span>
+            </a>
 
             {/* Sitemap links */}
             <div className="footer__sitemap-links">

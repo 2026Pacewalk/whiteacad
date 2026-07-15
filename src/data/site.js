@@ -19,6 +19,16 @@ export const site = {
   mapEmbed:
     'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13791.311044429776!2d74.961238!3d30.213463!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x909d6ccf47840608!2sWhite%20Hawk%20Academy!5e0!3m2!1sen!2sin!4v1608872126276!5m2!1sen!2sin',
   studentLogin: 'https://whitehawkacademy.speedlabs.in/LoginWHAB.aspx',
+  // Official Android app (publisher: Education Carroll Media).
+  // NOTE: the Play Store listing description currently describes GATE/CAT/CLAT
+  // courses, which does not match this academy's actual programmes — worth
+  // correcting in the Play Console.
+  app: {
+    name: 'WhiteHawk Academy',
+    android: 'https://play.google.com/store/apps/details?id=co.carroll.qtiar',
+    packageId: 'co.carroll.qtiar',
+    os: 'Android',
+  },
   developer: { name: 'PACEWALK', url: 'https://pacewalk.com' },
   social: {
     facebook: 'https://www.facebook.com/WHITEHAWKACADEMY/',

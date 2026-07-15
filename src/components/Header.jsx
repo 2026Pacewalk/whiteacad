@@ -5,6 +5,7 @@ import {
   Facebook, Instagram, MessageCircle, LogIn, GraduationCap,
   Home, Users, Image as ImageIcon, Trophy,
 } from 'lucide-react'
+import PlayStoreIcon from './PlayStoreIcon.jsx'
 import { site, nav } from '../data/site.js'
 
 // Leading icon for each mobile nav item.
@@ -176,6 +177,14 @@ export default function Header() {
               <MessageCircle aria-hidden="true" /> WhatsApp
             </a>
           </div>
+
+          <a className="app-badge app-badge--drawer" href={site.app.android} target="_blank" rel="noopener noreferrer">
+            <PlayStoreIcon size={24} />
+            <span>
+              <small>Download our app</small>
+              <strong>Get it on Google Play</strong>
+            </span>
+          </a>
 
           <ul className="drawer__contact">
             <li><MapPin aria-hidden="true" size={15} /> <span>{site.addressShort}</span></li>

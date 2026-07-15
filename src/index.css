@@ -65,7 +65,12 @@ body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* `hidden` on body makes it a scroll container (computed `hidden auto`),
+     which can break position:sticky and window scroll APIs. `clip` prevents
+     horizontal overflow without creating one. `hidden` stays first as a
+     fallback for browsers without `clip`. */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 img, svg { display: block; max-width: 100%; }
 img { height: auto; }
@@ -676,6 +681,19 @@ table.course-table { width: 100%; border-collapse: collapse; min-width: 560px; }
 .footer__contact .ic { color: var(--red); flex: none; margin-top: 2px; }
 .footer__contact a:hover { color: #fff; }
 .footer__map iframe { width: 100%; height: 150px; border: 0; border-radius: var(--r-md); margin-top: 6px; }
+/* Google Play badge */
+.app-badge {
+  display: inline-flex; align-items: center; gap: 12px; margin-top: 16px;
+  padding: 9px 18px 9px 14px; border-radius: var(--r-md);
+  background: #000; color: #fff; border: 1px solid rgba(255,255,255,.22);
+  transition: transform .25s var(--ease), border-color .25s, background .25s;
+}
+.app-badge:hover { transform: translateY(-2px); border-color: #fff; background: #111; }
+.app-badge span { display: grid; line-height: 1.25; }
+.app-badge small { font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+.app-badge strong { font-family: var(--font-head); font-size: .92rem; font-weight: 600; }
+.app-badge--drawer { width: 100%; justify-content: center; margin: 12px 0 0; }
+
 .footer__sitemap-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
 .footer__sitemap-links a { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); padding: 8px 14px; border-radius: var(--r-pill); font-size: .84rem; font-weight: 500; transition: background .2s, color .2s; }
 .footer__sitemap-links a:hover { background: var(--red); color: #fff; }
