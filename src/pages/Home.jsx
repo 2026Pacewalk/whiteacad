@@ -218,7 +218,7 @@ export default function Home() {
       {/* CTA + quick form */}
       <section className="section section--tight">
         <div className="container">
-          <div className="content-grid" style={{ gridTemplateColumns: '1.2fr 1fr', alignItems: 'center' }}>
+          <div className="content-grid content-grid--cta">
             <Reveal className="cta-band" style={{ margin: 0 }}>
               <div>
                 <h2>Ready to Start Your Journey?</h2>

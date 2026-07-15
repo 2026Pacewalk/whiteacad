@@ -12,7 +12,7 @@ export default function Contact() {
       <PageHero title="Contact Us" crumbs={[{ label: 'Contact Us' }]} />
 
       <section className="section">
-        <div className="container content-grid" style={{ gridTemplateColumns: '1fr 1.1fr' }}>
+        <div className="container content-grid content-grid--contact">
           <Reveal>
             <span className="eyebrow">Get In Touch</span>
             <h2 className="section-title" style={{ marginBottom: 22 }}>We’d Love to <span className="accent">Hear From You</span></h2>
