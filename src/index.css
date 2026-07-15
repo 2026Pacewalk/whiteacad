@@ -220,29 +220,95 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--ink); line-heig
 .drawer__top img { height: 52px; width: auto; }
 .drawer__close { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.14); display: grid; place-items: center; transition: background .2s, transform .2s; }
 .drawer__close:hover { background: var(--red); transform: rotate(90deg); }
-.drawer__nav { padding: 14px 16px; overflow-y: auto; flex: 1; }
+.drawer__nav { padding: 16px 14px 10px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+.drawer__label {
+  font-family: var(--font-head); font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--muted); padding: 0 12px; margin-bottom: 8px;
+}
+
+/* Nav row */
 .drawer__link {
-  display: flex; align-items: center; justify-content: space-between;
+  position: relative; width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
   font-family: var(--font-head); font-weight: 600; color: var(--navy);
-  padding: 14px 14px; border-radius: var(--r-md); font-size: 1.02rem;
-  opacity: 0; transform: translateX(16px);
+  padding: 13px 14px; border-radius: var(--r-md); font-size: 1rem;
+  min-height: 52px; text-align: left;
+  opacity: 0; transform: translateX(18px);
+  transition: background .22s var(--ease), color .22s var(--ease);
 }
-.drawer.open .drawer__link { animation: drawerIn .4s var(--ease) forwards; }
-.drawer__link.active, .drawer__link:hover { background: var(--surface-3); color: var(--red); }
-.drawer__sub { padding: 2px 0 6px 8px; margin-left: 8px; border-left: 2px solid var(--line); }
+.drawer.open .drawer__link { animation: drawerIn .45s var(--ease) forwards; }
+.drawer__link-main { display: flex; align-items: center; gap: 12px; }
+
+/* Leading icon chip */
+.drawer__ic {
+  width: 34px; height: 34px; border-radius: 10px; flex: none;
+  display: grid; place-items: center;
+  background: var(--surface-3); color: var(--navy);
+  transition: background .22s var(--ease), color .22s var(--ease), transform .22s var(--ease);
+}
+.drawer__go { color: var(--muted); transition: transform .22s var(--ease), color .22s; }
+
+/* Active / pressed states */
+.drawer__link:hover, .drawer__link:active,
+.drawer__link.active, .drawer__link.is-open {
+  background: var(--surface-2); color: var(--red);
+}
+.drawer__link:hover .drawer__ic, .drawer__link.active .drawer__ic, .drawer__link.is-open .drawer__ic {
+  background: var(--grad-red); color: #fff; transform: scale(1.04);
+}
+.drawer__link.active .drawer__go { color: var(--red); transform: translateX(3px); }
+/* Left accent bar on the current page */
+.drawer__link.active::before {
+  content: ''; position: absolute; left: 0; top: 12px; bottom: 12px;
+  width: 3px; border-radius: 0 3px 3px 0; background: var(--red);
+}
+
+.drawer__chevron { color: var(--muted); transition: transform .3s var(--ease); flex: none; }
+.drawer__chevron.open { transform: rotate(180deg); color: var(--red); }
+
+/* Courses sub-list — animated open/close.
+   The 0fr -> 1fr grid trick needs exactly ONE child, and that child owns the
+   overflow. Visual styling lives on the inner wrapper so a collapsed list has
+   truly zero height (no ghost gap). */
+.drawer__sub {
+  display: grid; grid-template-rows: 0fr; opacity: 0;
+  transition: grid-template-rows .32s var(--ease), opacity .28s var(--ease);
+}
+.drawer__sub > .drawer__sub-inner {
+  overflow: hidden; min-height: 0;
+  margin-left: 31px; padding-left: 12px; border-left: 2px solid var(--line);
+}
+.drawer__sub.open { grid-template-rows: 1fr; opacity: 1; }
 .drawer__sub a {
-  display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: var(--r-sm);
-  color: var(--body); font-weight: 500; font-size: .95rem;
+  display: flex; align-items: center; gap: 10px; padding: 11px 10px; border-radius: var(--r-sm);
+  color: var(--body); font-weight: 500; font-size: .92rem; min-height: 44px;
+  transition: color .2s, background .2s, transform .2s;
 }
-.drawer__sub a svg { width: 15px; height: 15px; color: var(--red); }
-.drawer__sub a.active, .drawer__sub a:hover { color: var(--red); background: var(--surface-2); }
-.drawer__accordion-btn { width: 100%; }
-.drawer__chevron { transition: transform .3s var(--ease); }
-.drawer__chevron.open { transform: rotate(180deg); }
-.drawer__foot { padding: 18px 20px; border-top: 1px solid var(--line); display: grid; gap: 12px; }
-.drawer__contact { font-size: .9rem; color: var(--muted); display: grid; gap: 8px; }
-.drawer__contact a { display: flex; align-items: center; gap: 9px; color: var(--navy); font-weight: 500; }
-.drawer__contact svg { width: 16px; height: 16px; color: var(--red); }
+.drawer__sub a .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--line); flex: none;
+  transition: background .2s, transform .2s;
+}
+.drawer__sub a:hover, .drawer__sub a.active { color: var(--red); background: var(--surface-2); }
+.drawer__sub a.active .dot, .drawer__sub a:hover .dot { background: var(--red); transform: scale(1.5); }
+
+/* Footer actions */
+.drawer__foot { padding: 16px 18px calc(16px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--surface-2); }
+.drawer__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.drawer__actions .btn { padding: 12px 10px; font-size: .88rem; min-height: 46px; }
+.btn-wa { background: #25d366; color: #fff; box-shadow: 0 8px 20px rgba(37,211,102,.32); }
+.btn-wa:hover { transform: translateY(-2px); background: #1fbb59; }
+.drawer__contact { display: grid; gap: 8px; margin: 14px 0 12px; font-size: .84rem; color: var(--muted); }
+.drawer__contact li { display: flex; align-items: flex-start; gap: 9px; }
+.drawer__contact svg { color: var(--red); flex: none; margin-top: 2px; }
+.drawer__contact a { color: var(--muted); }
+.drawer__contact a:hover { color: var(--red); }
+.drawer__social { display: flex; gap: 8px; }
+.drawer__social a {
+  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+  background: #fff; border: 1px solid var(--line); color: var(--navy);
+  transition: background .22s, color .22s, transform .22s var(--ease);
+}
+.drawer__social a:hover { background: var(--red); border-color: var(--red); color: #fff; transform: translateY(-2px); }
 
 @keyframes drawerIn { to { opacity: 1; transform: translateX(0); } }
 

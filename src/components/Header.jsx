@@ -1,10 +1,21 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import {
-  Menu, X, ChevronDown, ChevronRight, Phone, Mail,
+  Menu, X, ChevronDown, ChevronRight, Phone, Mail, MapPin,
   Facebook, Instagram, MessageCircle, LogIn, GraduationCap,
+  Home, Users, Image as ImageIcon, Trophy,
 } from 'lucide-react'
 import { site, nav } from '../data/site.js'
+
+// Leading icon for each mobile nav item.
+const navIcons = {
+  '/': Home,
+  '/about': Users,
+  '/courses': GraduationCap,
+  '/gallery': ImageIcon,
+  '/results': Trophy,
+  '/contact': Mail,
+}
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -23,6 +34,12 @@ export default function Header() {
   // Close drawer on route change
   useEffect(() => { setOpen(false) }, [pathname])
 
+  // Auto-expand the Courses group when viewing a course page
+  useEffect(() => {
+    const courseChildren = nav.find((n) => n.children)?.children || []
+    if (courseChildren.some((c) => c.to === pathname)) setCoursesOpen(true)
+  }, [pathname])
+
   // Lock body scroll + ESC to close while drawer open
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -30,8 +47,6 @@ export default function Header() {
     window.addEventListener('keydown', onKey)
     return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', onKey) }
   }, [open])
-
-  const courses = nav.find((n) => n.children)?.children || []
 
   return (
     <>
@@ -93,8 +108,9 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile drawer */}
+      {/* ---------------- Mobile drawer ---------------- */}
       <div className={`drawer-backdrop ${open ? 'open' : ''}`} hidden={!open} onClick={() => setOpen(false)} />
+
       <aside className={`drawer ${open ? 'open' : ''}`} aria-hidden={!open} aria-label="Mobile menu">
         <div className="drawer__top">
           <img src={site.logo} alt="Whitehawk Academy logo" width="120" height="105" />
@@ -104,50 +120,72 @@ export default function Header() {
         </div>
 
         <nav className="drawer__nav" aria-label="Mobile">
-          {nav.map((item, i) =>
-            item.children ? (
-              <div key={item.label} style={{ animationDelay: `${i * 45}ms` }}>
-                <button
-                  className="drawer__link drawer__accordion-btn"
-                  aria-expanded={coursesOpen}
-                  onClick={() => setCoursesOpen((v) => !v)}
-                  style={{ animationDelay: `${i * 45}ms` }}
-                >
-                  {item.label}
-                  <ChevronDown className={`drawer__chevron ${coursesOpen ? 'open' : ''}`} aria-hidden="true" size={18} />
-                </button>
-                {coursesOpen && (
-                  <div className="drawer__sub">
-                    {item.children.map((c) => (
-                      <NavLink key={c.to} to={c.to}>
-                        <ChevronRight aria-hidden="true" /> {c.label}
-                      </NavLink>
-                    ))}
+          <p className="drawer__label">Menu</p>
+
+          {nav.map((item, i) => {
+            const Icon = navIcons[item.to] || ChevronRight
+            const style = { animationDelay: `${60 + i * 45}ms` }
+
+            if (item.children) {
+              return (
+                <div key={item.label} className="drawer__group">
+                  <button
+                    className={`drawer__link drawer__accordion-btn ${coursesOpen ? 'is-open' : ''}`}
+                    aria-expanded={coursesOpen}
+                    onClick={() => setCoursesOpen((v) => !v)}
+                    style={style}
+                  >
+                    <span className="drawer__link-main">
+                      <span className="drawer__ic"><Icon aria-hidden="true" size={18} /></span>
+                      {item.label}
+                    </span>
+                    <ChevronDown className={`drawer__chevron ${coursesOpen ? 'open' : ''}`} aria-hidden="true" size={18} />
+                  </button>
+
+                  <div className={`drawer__sub ${coursesOpen ? 'open' : ''}`}>
+                    <div className="drawer__sub-inner">
+                      {item.children.map((c) => (
+                        <NavLink key={c.to} to={c.to}>
+                          <span className="dot" aria-hidden="true" /> {c.label}
+                        </NavLink>
+                      ))}
+                    </div>
                   </div>
-                )}
-              </div>
-            ) : (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === '/'}
-                className="drawer__link"
-                style={{ animationDelay: `${i * 45}ms` }}
-              >
-                {item.label}
-                <ChevronRight aria-hidden="true" size={16} />
+                </div>
+              )
+            }
+
+            return (
+              <NavLink key={item.to} to={item.to} end={item.to === '/'} className="drawer__link" style={style}>
+                <span className="drawer__link-main">
+                  <span className="drawer__ic"><Icon aria-hidden="true" size={18} /></span>
+                  {item.label}
+                </span>
+                <ChevronRight className="drawer__go" aria-hidden="true" size={16} />
               </NavLink>
-            ),
-          )}
+            )
+          })}
         </nav>
 
         <div className="drawer__foot">
-          <a className="btn btn-primary" href={site.studentLogin} target="_blank" rel="noopener noreferrer">
-            <LogIn aria-hidden="true" /> Student Login
-          </a>
-          <div className="drawer__contact">
-            <a href={`tel:${site.phone}`}><Phone aria-hidden="true" /> {site.phoneDisplay}</a>
-            <a href={`mailto:${site.email}`}><Mail aria-hidden="true" /> {site.email}</a>
+          <div className="drawer__actions">
+            <a className="btn btn-primary" href={`tel:${site.phone}`}>
+              <Phone aria-hidden="true" /> Call Now
+            </a>
+            <a className="btn btn-wa" href={site.social.whatsapp} target="_blank" rel="noopener noreferrer">
+              <MessageCircle aria-hidden="true" /> WhatsApp
+            </a>
+          </div>
+
+          <ul className="drawer__contact">
+            <li><MapPin aria-hidden="true" size={15} /> <span>{site.addressShort}</span></li>
+            <li><Mail aria-hidden="true" size={15} /> <a href={`mailto:${site.email}`}>{site.email}</a></li>
+          </ul>
+
+          <div className="drawer__social">
+            <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook aria-hidden="true" size={16} /></a>
+            <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram aria-hidden="true" size={16} /></a>
+            <a href={site.social.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><MessageCircle aria-hidden="true" size={16} /></a>
           </div>
         </div>
       </aside>
