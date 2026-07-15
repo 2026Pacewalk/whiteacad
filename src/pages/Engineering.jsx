@@ -1,6 +1,13 @@
 import CourseDetail from '../components/CourseDetail.jsx'
-import { courses, seo } from '../data/site.js'
+import { courses, seo, answers, faqs } from '../data/site.js'
 
 export default function Engineering() {
-  return <CourseDetail course={courses.engineering} meta={seo.engineering} />
+  return (
+    <CourseDetail
+      course={courses.engineering}
+      meta={seo.engineering}
+      answer={answers.engineering}
+      faqItems={faqs.engineering}
+    />
+  )
 }

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { site } from '../data/site.js'
+import { buildGraph } from '../data/schema.js'
 
 // Upsert a singleton <meta> so tags are never duplicated across route changes.
 function upsertMeta(attr, key, content) {
@@ -28,7 +29,9 @@ function upsertLink(rel, href) {
  * production build. For crawlers/social scrapers that do not run JS, the same
  * tags are baked into static HTML at build time by scripts/prerender.mjs.
  */
-export default function Seo({ meta, jsonLd, noindex = false }) {
+export default function Seo({ meta, faqItems, course, noindex = false }) {
+  const jsonLd = noindex ? null : buildGraph({ meta, faqItems, course })
+
   useEffect(() => {
     const url = site.url + (meta.path === '/' ? '' : meta.path)
     const image = site.url + (meta.image || site.ogDefault)
@@ -68,6 +71,7 @@ export default function Seo({ meta, jsonLd, noindex = false }) {
       ld.remove()
     }
   }, [meta, jsonLd, noindex])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return null
 }

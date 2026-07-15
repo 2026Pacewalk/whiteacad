@@ -214,76 +214,197 @@ export const resultImages = [
 ]
 
 // ---------------------------------------------------------------------------
-// Per-page SEO metadata (title, description, OG image, path)
+// Local SEO data (powers LocalBusiness / EducationalOrganization schema)
+// Coordinates taken from the academy's Google Maps listing.
+// ---------------------------------------------------------------------------
+export const local = {
+  streetAddress: 'Model Town Phase-3, Opp. Dadi Poti Park',
+  locality: 'Bathinda',
+  region: 'Punjab',
+  postalCode: '151001',
+  country: 'IN',
+  lat: 30.213463,
+  lng: 74.961238,
+  priceRange: '₹₹',
+  areaServed: ['Bathinda', 'Mansa', 'Muktsar', 'Faridkot', 'Barnala', 'Punjab'],
+  openingHours: [
+    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '08:00', closes: '20:00' },
+  ],
+}
+
+// ---------------------------------------------------------------------------
+// Per-page SEO metadata
+// Gates: title <= 60 chars, description <= 155 chars with a CTA.
+// `answer` = AEO direct-answer block (40-60 words) rendered at the top of the
+// page and used verbatim by featured snippets / AI answer engines.
 // ---------------------------------------------------------------------------
 export const seo = {
   home: {
     path: '/',
-    title: 'Whitehawk Academy | Best Coaching for IIT, NEET & NTSE in Bathinda',
+    title: 'Best IIT & NEET Coaching in Bathinda | Whitehawk Academy',
     description:
-      'Whitehawk Academy (J.P. Brar) is Bathinda’s leading academy for IIT-JEE, NEET, NTSE, KVPY & Olympiads. Expert faculty, smart classes, study material and proven results.',
+      'Whitehawk Academy, Bathinda — expert coaching for IIT-JEE, NEET, NTSE & Olympiads. Smart classes, study material, proven results. Book free counselling.',
     image: '/images/slider-1.jpg',
+    breadcrumb: [],
   },
   about: {
     path: '/about',
-    title: 'About Us | Whitehawk Academy — Bathinda’s Trusted Coaching Academy',
+    title: 'About Whitehawk Academy | Coaching Institute Bathinda',
     description:
-      'Learn about Whitehawk Academy, Bathinda — our vision, mission and student-first approach to coaching for IIT, NEET, NTSE, KVPY and Olympiads.',
+      'Learn about Whitehawk Academy Bathinda — our vision, mission and student-first coaching for IIT, NEET, NTSE, KVPY and Olympiads. Talk to a counsellor.',
     image: '/images/about-2.jpg',
+    breadcrumb: [{ name: 'About Us', path: '/about' }],
   },
   engineering: {
     path: '/engineering',
-    title: 'Engineering (Non Medical) Coaching | IIT-JEE Main & Advanced — Whitehawk Academy',
+    title: 'IIT-JEE Coaching in Bathinda | Whitehawk Academy',
     description:
-      'Non-Medical / Engineering coaching for JEE Main & Advanced at Whitehawk Academy Bathinda — comprehensive study material, revision classes and test series.',
+      'JEE Main & Advanced coaching in Bathinda — complete theory, MCQ practice, revision classes and test series. Enquire about the next Engineering batch.',
     image: '/images/engineering.jpg',
+    breadcrumb: [{ name: 'Courses', path: '/sitemap' }, { name: 'Engineering', path: '/engineering' }],
   },
   medical: {
     path: '/medical',
-    title: 'Medical Coaching | NEET & AIIMS Preparation — Whitehawk Academy Bathinda',
+    title: 'NEET Coaching in Bathinda | Whitehawk Academy',
     description:
-      'Medical coaching for NEET & AIIMS at Whitehawk Academy Bathinda — expert faculty, comprehensive study material, revision classes and test series.',
+      'NEET & AIIMS coaching in Bathinda — expert faculty, comprehensive study material, revision classes and test series. Enquire about the next Medical batch.',
     image: '/images/medical.jpg',
+    breadcrumb: [{ name: 'Courses', path: '/sitemap' }, { name: 'Medical', path: '/medical' }],
   },
   foundation: {
     path: '/foundation-courses',
-    title: 'Foundation Courses (Class 7–10) & NTSE | Whitehawk Academy Bathinda',
+    title: 'Foundation & NTSE Coaching Class 7-10 | Bathinda',
     description:
-      'Foundation Courses for classes 7th–10th plus NTSE, KVPY and Olympiad preparation at Whitehawk Academy Bathinda. Build a strong base early.',
+      'Foundation courses for classes 7th–10th in Bathinda with NTSE, KVPY & Olympiad prep. Build a strong base early. Book a free counselling session.',
     image: '/images/foundation-courses.jpg',
+    breadcrumb: [{ name: 'Courses', path: '/sitemap' }, { name: 'Foundation Courses', path: '/foundation-courses' }],
   },
   distance: {
     path: '/distance-education-program',
-    title: 'Distance Education Program | Study Material & Test Series — Whitehawk Academy',
+    title: 'Distance Learning Program | Whitehawk Academy Bathinda',
     description:
-      'Whitehawk Academy Distance Education Program — study material packages and test series for Foundation, Non-Medical and Medical students who study remotely.',
+      'Distance Education Program from Whitehawk Academy — study material packages and test series for Foundation, Non-Medical and Medical students. Enquire now.',
     image: '/images/distance-education-program.jpg',
+    breadcrumb: [{ name: 'Courses', path: '/sitemap' }, { name: 'Distance Education', path: '/distance-education-program' }],
   },
   gallery: {
     path: '/gallery',
-    title: 'Gallery | Whitehawk Academy Bathinda — Campus, Classes & Achievers',
+    title: 'Gallery | Whitehawk Academy Bathinda',
     description:
-      'Photo gallery of Whitehawk Academy Bathinda — classrooms, events, achievers and campus life.',
+      'Photo gallery of Whitehawk Academy Bathinda — classrooms, smart classes, events and our achievers. See campus life and results.',
     image: '/images/result-2.jpg',
+    breadcrumb: [{ name: 'Gallery', path: '/gallery' }],
   },
   results: {
     path: '/results',
-    title: 'Successful Results | Whitehawk Academy Bathinda — Toppers & Achievers',
+    title: 'Results & Toppers | Whitehawk Academy Bathinda',
     description:
-      'See the successful results and achievers of Whitehawk Academy Bathinda across IIT-JEE, NEET, NTSE and more.',
+      'See the results and toppers of Whitehawk Academy Bathinda across IIT-JEE, NEET and NTSE. Join the next batch and build your own success story.',
     image: '/images/result-3.jpg',
+    breadcrumb: [{ name: 'Results', path: '/results' }],
   },
   contact: {
     path: '/contact',
-    title: 'Contact Us | Whitehawk Academy Bathinda — Address, Phone & Enquiry',
+    title: 'Contact Whitehawk Academy | Bathinda Coaching',
     description:
-      'Contact Whitehawk Academy, Model Town Phase-3, Bathinda. Call +91 84279-76607 or send an enquiry for admissions and course details.',
+      'Contact Whitehawk Academy, Model Town Phase-3, Bathinda. Call +91 84279-76607 or send an enquiry on WhatsApp for admissions and course details.',
     image: '/images/slider-2.jpg',
+    breadcrumb: [{ name: 'Contact Us', path: '/contact' }],
   },
   sitemap: {
     path: '/sitemap',
     title: 'Sitemap | Whitehawk Academy Bathinda',
-    description: 'Full list of pages on the Whitehawk Academy website — quick links to every section.',
+    description: 'Full list of pages on the Whitehawk Academy website — quick links to every section and course.',
     image: '/images/slider-1.jpg',
+    breadcrumb: [{ name: 'Sitemap', path: '/sitemap' }],
   },
+}
+
+// ---------------------------------------------------------------------------
+// AEO — direct answer blocks (40–60 words). Answer first, explain after: this
+// is what featured snippets and AI answer engines lift verbatim.
+// ---------------------------------------------------------------------------
+export const answers = {
+  home: 'Whitehawk Academy is a competitive-exam coaching institute in Model Town Phase-3, Bathinda, Punjab. Founded on the principle that talent is nurtured and values are built, it prepares students for IIT-JEE (Main & Advanced), NEET, AIIMS, NTSE, KVPY and Olympiads through smart classrooms, comprehensive study material, regular test series and one-to-one mentoring.',
+  engineering: 'Whitehawk Academy’s Engineering (Non-Medical) programme prepares students in Bathinda for JEE Main, JEE Advanced and Board Examinations. Courses run for classes 11th and 12th over 8–12 months, covering complete theory plus MCQ practice, followed by revision classes and a full test series. A one-month crash course is available before the entrance exams.',
+  medical: 'Whitehawk Academy’s Medical programme prepares students in Bathinda for NEET, AIIMS and Board Examinations. Courses run for classes 11th and 12th over 8–12 months, covering complete theory plus MCQ practice, followed by comprehensive revision classes and a full test series. A one-month crash course is available before the entrance exams.',
+  foundation: 'Whitehawk Academy’s Foundation Courses build a strong conceptual base for students of classes 7th to 10th in Bathinda, alongside their school syllabus. The programme prepares students for NTSE, KVPY and Olympiads through concept-building classes, comprehensive study material, regular test series and doubt-clearing sessions.',
+  distance: 'Whitehawk Academy’s Distance Education Program supports students who cannot attend classes in person. It delivers a complete Study Material Package and a regular Test Series with performance analysis, covering Foundation (classes 7–10), Non-Medical and Medical streams for IIT-JEE, NEET and NTSE preparation.',
+}
+
+// ---------------------------------------------------------------------------
+// FAQs — rendered visibly on-page AND emitted as FAQPage schema.
+// Questions are phrased the way people actually search (PAA capture).
+// ---------------------------------------------------------------------------
+export const faqs = {
+  home: [
+    {
+      q: 'Which is the best coaching academy for IIT and NEET in Bathinda?',
+      a: 'Whitehawk Academy in Model Town Phase-3, Bathinda is a leading choice for IIT-JEE and NEET preparation, offering smart classrooms, comprehensive study material, regular test series and personal attention to every student. Call +91 84279-76607 to book a free counselling session.',
+    },
+    {
+      q: 'What courses does Whitehawk Academy offer?',
+      a: 'Whitehawk Academy offers four programmes: Engineering (Non-Medical) for JEE Main & Advanced, Medical for NEET & AIIMS, Foundation Courses for classes 7th–10th including NTSE and Olympiads, and a Distance Education Program with study material and test series.',
+    },
+    {
+      q: 'Where is Whitehawk Academy located in Bathinda?',
+      a: 'Whitehawk Academy is located at Model Town Phase-3, opposite Dadi Poti Park, Bathinda, Punjab. The academy is open Monday to Saturday, 8:00 AM to 8:00 PM. You can call +91 84279-76607 or message on WhatsApp for directions.',
+    },
+    {
+      q: 'Does Whitehawk Academy offer coaching for students outside Bathinda?',
+      a: 'Yes. The Distance Education Program is designed for students separated by time and distance. It includes a complete Study Material Package and a regular Test Series with performance analysis, covering Foundation, Non-Medical and Medical streams.',
+    },
+    {
+      q: 'How do I enrol at Whitehawk Academy?',
+      a: 'You can enrol by calling +91 84279-76607, messaging on WhatsApp, or submitting the free registration form on this website. The team will discuss your target exam, recommend a suitable batch and arrange a free counselling session.',
+    },
+  ],
+  engineering: [
+    {
+      q: 'Which exams does the Engineering (Non-Medical) course prepare for?',
+      a: 'The Engineering programme targets JEE Main, JEE Advanced and Board Examinations, with complete theory coverage plus multiple choice question (MCQ) practice for classes 11th and 12th.',
+    },
+    {
+      q: 'How long is the IIT-JEE coaching course at Whitehawk Academy?',
+      a: 'Regular courses for classes 11th and 12th run for 12 months — roughly 8 months to cover complete theory in detail, followed by 4 months of revision and test series. An MCQ-focused 8-month course and a 1-month crash course are also available.',
+    },
+    {
+      q: 'Is there a crash course before JEE?',
+      a: 'Yes. The crash course runs for approximately one month and revises all concepts using a result-oriented approach, followed by a test series and a mock test, continuing until the entrance exams are over.',
+    },
+  ],
+  medical: [
+    {
+      q: 'Which exams does the Medical course prepare for?',
+      a: 'The Medical programme targets NEET, AIIMS and Board Examinations, with complete theory coverage plus multiple choice question (MCQ) practice for classes 11th and 12th.',
+    },
+    {
+      q: 'How long is the NEET coaching course at Whitehawk Academy?',
+      a: 'Regular courses for classes 11th and 12th run for 12 months — roughly 8 months to cover complete theory in detail, followed by 4 months of revision and test series. An MCQ-focused 8-month course and a 1-month crash course are also available.',
+    },
+    {
+      q: 'Do you provide study material for NEET preparation?',
+      a: 'Yes. Every Medical student receives comprehensive, exam-focused study material. After the syllabus is completed, students get comprehensive revision classes and a full test series with performance tracking.',
+    },
+  ],
+  foundation: [
+    {
+      q: 'Which classes can join the Foundation Course?',
+      a: 'Foundation Courses are open to students of classes 7th, 8th, 9th and 10th. Classes 9th and 10th also include dedicated NTSE preparation alongside the foundation syllabus.',
+    },
+    {
+      q: 'Why should a student start coaching in class 7 or 8?',
+      a: 'Starting early builds concept clarity and study habits before the pressure of classes 11th and 12th. The Foundation programme strengthens the school syllabus while preparing students for NTSE, KVPY and Olympiads.',
+    },
+  ],
+  distance: [
+    {
+      q: 'What is included in the Distance Education Program?',
+      a: 'The Distance Education Program includes a complete Study Material Package and a regular Test Series with performance analysis. It covers Foundation (classes 7–10), Non-Medical and Medical streams.',
+    },
+    {
+      q: 'Who should choose distance learning over classroom coaching?',
+      a: 'Distance learning suits students who cannot attend classes in person because of time or distance constraints. It bridges the gap between the institute and the student while still providing structured material and regular testing.',
+    },
+  ],
 }

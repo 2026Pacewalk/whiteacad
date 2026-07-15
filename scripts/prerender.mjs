@@ -1,14 +1,16 @@
 // Post-build: bake per-route SEO (title, description, canonical, Open Graph,
-// Twitter, JSON-LD) into static HTML so crawlers and social scrapers that do
-// NOT run JavaScript still get correct tags and link previews.
+// Twitter, JSON-LD @graph) into static HTML so crawlers and social scrapers
+// that do NOT run JavaScript still get correct tags, rich results and
+// link previews.
 //
-// Produces dist/<route>/index.html for every route, reusing the built SPA
-// bundle (the JS then hydrates the correct route from the URL).
+// Emits "<slug>.html" so Cloudflare Pages serves /about with a 200 and no
+// trailing-slash redirect, matching our canonical URLs.
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { seo, site, courseList } from '../src/data/site.js'
+import { seo, site, courseList, faqs } from '../src/data/site.js'
+import { buildGraph } from '../src/data/schema.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const dist = join(__dirname, '..', 'dist')
@@ -17,45 +19,23 @@ const template = readFileSync(join(dist, 'index.html'), 'utf8')
 const esc = (s = '') =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
-const coursePaths = new Set(courseList.map((c) => c.path))
+// JSON-LD must not let "</script>" terminate the block early.
+const jsonLdSafe = (o) => JSON.stringify(o).replace(/</g, '\\u003c')
 
-const orgJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'EducationalOrganization',
-  name: site.name,
-  alternateName: site.legalName,
-  url: site.url,
-  logo: site.url + site.logo,
-  telephone: site.phoneDisplay,
-  email: site.email,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Model Town Phase-3, Opp. Dadi Poti Park',
-    addressLocality: 'Bathinda',
-    addressRegion: 'Punjab',
-    addressCountry: 'IN',
-  },
-  sameAs: [site.social.facebook, site.social.instagram],
-}
+const courseByPath = new Map(courseList.map((c) => [c.path, c]))
 
-function courseJsonLd(meta) {
-  const c = courseList.find((x) => x.path === meta.path)
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Course',
-    name: c.name,
-    description: meta.description,
-    provider: { '@type': 'EducationalOrganization', name: site.name, sameAs: site.url },
-  }
-}
-
-function headFor(meta) {
+function headFor(key, meta) {
   const url = site.url + (meta.path === '/' ? '' : meta.path)
   const image = site.url + (meta.image || site.ogDefault)
-  const ld = coursePaths.has(meta.path) ? courseJsonLd(meta) : orgJsonLd
+  const graph = buildGraph({
+    meta,
+    faqItems: faqs[key],
+    course: courseByPath.get(meta.path),
+  })
+
   return [
     `<meta name="description" content="${esc(meta.description)}">`,
-    `<meta name="robots" content="index, follow">`,
+    `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">`,
     `<link rel="canonical" href="${url}">`,
     `<meta property="og:type" content="website">`,
     `<meta property="og:site_name" content="${esc(site.name)}">`,
@@ -69,25 +49,27 @@ function headFor(meta) {
     `<meta name="twitter:title" content="${esc(meta.title)}">`,
     `<meta name="twitter:description" content="${esc(meta.description)}">`,
     `<meta name="twitter:image" content="${image}">`,
-    `<script type="application/ld+json">${JSON.stringify(ld)}</script>`,
+    `<meta name="geo.region" content="IN-PB">`,
+    `<meta name="geo.placename" content="Bathinda">`,
+    // data-seo-jsonld lets the runtime <Seo> component UPDATE this node on
+    // client-side navigation instead of appending a duplicate graph.
+    `<script type="application/ld+json" data-seo-jsonld>${jsonLdSafe(graph)}</script>`,
   ].join('\n    ')
 }
 
-function pageHtml(meta) {
+function pageHtml(key, meta) {
   return template
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(meta.title)}</title>`)
-    .replace('</head>', `    ${headFor(meta)}\n  </head>`)
+    .replace('</head>', `    ${headFor(key, meta)}\n  </head>`)
 }
 
-// Emit "<slug>.html" (not "<slug>/index.html") so Cloudflare Pages serves
-// /about directly with a 200 — matching our canonical URLs, which have no
-// trailing slash. Directory-style output would 308-redirect /about -> /about/.
 let count = 0
-for (const meta of Object.values(seo)) {
-  const html = pageHtml(meta)
+let faqPages = 0
+for (const [key, meta] of Object.entries(seo)) {
   const name = meta.path === '/' ? 'index.html' : `${meta.path.replace(/^\//, '')}.html`
-  writeFileSync(join(dist, name), html)
+  writeFileSync(join(dist, name), pageHtml(key, meta))
+  if (faqs[key]?.length) faqPages++
   count++
 }
 
-console.log(`✓ Prerendered SEO into ${count} static HTML pages.`)
+console.log(`✓ Prerendered SEO into ${count} static HTML pages (${faqPages} with FAQPage schema).`)

@@ -2,33 +2,26 @@ import Seo from './Seo.jsx'
 import PageHero from './PageHero.jsx'
 import Sidebar from './Sidebar.jsx'
 import Reveal from './Reveal.jsx'
+import Faq from './Faq.jsx'
+import AnswerBlock from './AnswerBlock.jsx'
 import { Target, Check } from 'lucide-react'
 
 // Shared layout for the four course detail pages.
-export default function CourseDetail({ course, meta }) {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Course',
-    name: course.name,
-    description: meta.description,
-    provider: {
-      '@type': 'EducationalOrganization',
-      name: 'Whitehawk Academy',
-      sameAs: 'https://whitehawkacademy.com',
-    },
-  }
-
+export default function CourseDetail({ course, meta, answer, faqItems }) {
   return (
     <>
-      <Seo meta={meta} jsonLd={jsonLd} />
+      <Seo meta={meta} course={course} faqItems={faqItems} />
       <PageHero title={course.name} crumbs={[{ label: 'Courses' }, { label: course.short }]} />
 
       <section className="section">
         <div className="container content-grid">
           <Reveal className="prose">
+            {/* AEO: direct answer first, detail after */}
+            {answer && <AnswerBlock>{answer}</AnswerBlock>}
+
             <img src={course.image} alt={course.alt} width="760" height="480" />
             <span className="eyebrow">Course</span>
-            <h3>{course.name} Programme</h3>
+            <h2 className="prose-h2">{course.name} Programme in Bathinda</h2>
 
             <div className="chips">
               <span className="chip"><Target aria-hidden="true" /> Exams: {course.exams}</span>
@@ -36,6 +29,7 @@ export default function CourseDetail({ course, meta }) {
 
             <p>{course.intro}</p>
 
+            <h3>What you get</h3>
             <ul className="feature-list">
               {course.highlights.map((h) => (
                 <li key={h}>
@@ -45,7 +39,7 @@ export default function CourseDetail({ course, meta }) {
               ))}
             </ul>
 
-            <h3 style={{ marginTop: 28 }}>Course Details</h3>
+            <h3 style={{ marginTop: 28 }}>{course.name} course details, duration and fees structure</h3>
             <div className="table-card">
               <div className="table-scroll">
                 <table className="course-table">
@@ -65,6 +59,8 @@ export default function CourseDetail({ course, meta }) {
           <Sidebar />
         </div>
       </section>
+
+      <Faq items={faqItems} title={`${course.short} coaching — your questions answered`} />
     </>
   )
 }

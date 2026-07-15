@@ -8,8 +8,11 @@ import Seo from '../components/Seo.jsx'
 import Reveal from '../components/Reveal.jsx'
 import Counter from '../components/Counter.jsx'
 import EnquiryForm from '../components/EnquiryForm.jsx'
+import Faq from '../components/Faq.jsx'
+import AnswerBlock from '../components/AnswerBlock.jsx'
 import {
   site, seo, slides, features, stats, testimonials, courseList, galleryImages,
+  answers, faqs,
 } from '../data/site.js'
 
 const featureIcons = { BookOpen, GraduationCap, Presentation, PhoneCall }
@@ -23,28 +26,9 @@ export default function Home() {
     return () => clearInterval(t)
   }, [])
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'EducationalOrganization',
-    name: site.name,
-    alternateName: site.legalName,
-    url: site.url,
-    logo: site.url + site.logo,
-    telephone: site.phoneDisplay,
-    email: site.email,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Model Town Phase-3, Opp. Dadi Poti Park',
-      addressLocality: 'Bathinda',
-      addressRegion: 'Punjab',
-      addressCountry: 'IN',
-    },
-    sameAs: [site.social.facebook, site.social.instagram],
-  }
-
   return (
     <>
-      <Seo meta={seo.home} jsonLd={jsonLd} />
+      <Seo meta={seo.home} faqItems={faqs.home} />
 
       {/* Hero */}
       <section className="hero" aria-roledescription="carousel" aria-label="Highlights">
@@ -110,6 +94,7 @@ export default function Home() {
             <span className="eyebrow">Welcome to Whitehawk Academy</span>
             <h2 className="section-title">Building <span className="accent">Beautiful Minds</span> in Bathinda</h2>
             <blockquote>{site.tagline}.</blockquote>
+            <AnswerBlock label="What is Whitehawk Academy?">{answers.home}</AnswerBlock>
             <p className="lead" style={{ marginBottom: 6 }}>
               We provide a knowledge bridge between school and dream colleges — training youth for
               IIT-JEE, NEET, NTSE, KVPY &amp; Olympiads. We recognise every student’s strengths and
@@ -247,6 +232,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* FAQ — AEO / People Also Ask capture */}
+      <Faq items={faqs.home} title="Frequently Asked Questions" />
 
       {/* CTA + quick form */}
       <section className="section section--tight">
