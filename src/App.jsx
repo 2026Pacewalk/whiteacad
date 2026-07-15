@@ -14,6 +14,8 @@ import Gallery from './pages/Gallery.jsx'
 import Results from './pages/Results.jsx'
 import Contact from './pages/Contact.jsx'
 import SitemapPage from './pages/SitemapPage.jsx'
+import Privacy from './pages/Privacy.jsx'
+import Terms from './pages/Terms.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -34,6 +36,8 @@ export default function App() {
           <Route path="/results" element={<Results />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/sitemap" element={<SitemapPage />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

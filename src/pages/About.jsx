@@ -3,6 +3,8 @@ import { Eye, Flag, Check, ArrowRight, Target } from 'lucide-react'
 import Seo from '../components/Seo.jsx'
 import PageHero from '../components/PageHero.jsx'
 import Reveal from '../components/Reveal.jsx'
+import FounderBio from '../components/FounderBio.jsx'
+import LastUpdated from '../components/LastUpdated.jsx'
 import { site, seo } from '../data/site.js'
 
 const values = [
@@ -41,9 +43,13 @@ export default function About() {
               attention to each one, so that their career can be given a bright shape.
             </p>
             <Link className="btn btn-primary" to="/contact">Talk to a Counsellor <ArrowRight aria-hidden="true" /></Link>
+            <LastUpdated />
           </Reveal>
         </div>
       </section>
+
+      {/* EEAT: who stands behind the teaching */}
+      <FounderBio />
 
       {/* Vision / Mission */}
       <section className="section why">

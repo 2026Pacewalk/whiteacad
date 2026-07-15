@@ -4,10 +4,33 @@
 // Validate with: https://search.google.com/test/rich-results
 // ============================================================================
 
-import { site, local, courseList } from './site.js'
+import { site, local, courseList, founder, lastUpdated } from './site.js'
 
 const ORG_ID = `${site.url}/#organization`
 const SITE_ID = `${site.url}/#website`
+const PERSON_ID = `${site.url}/#founder`
+
+/** Person node for the founder (EEAT authorship).
+ *  Only emits fields that are actually populated — never guessed. */
+export function founderSchema() {
+  const node = {
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: founder.name,
+    jobTitle: founder.role,
+    worksFor: { '@id': ORG_ID },
+  }
+  if (founder.bio) node.description = founder.bio
+  if (founder.photo) node.image = site.url + founder.photo
+  if (founder.sameAs?.length) node.sameAs = founder.sameAs
+  if (founder.credentials?.length) {
+    node.hasCredential = founder.credentials.map((c) => ({
+      '@type': 'EducationalOccupationalCredential',
+      name: c,
+    }))
+  }
+  return node
+}
 
 /** LocalBusiness + EducationalOrganization — powers the Google Local Pack
  *  and "coaching near me" / "in Bathinda" queries. */
@@ -128,7 +151,23 @@ export function courseSchema(course, meta) {
  * loose blocks) lets crawlers resolve @id references between nodes.
  */
 export function buildGraph({ meta, faqItems, course }) {
-  const nodes = [organizationSchema(), websiteSchema(), breadcrumbSchema(meta)]
+  const nodes = [
+    organizationSchema(),
+    websiteSchema(),
+    founderSchema(),
+    breadcrumbSchema(meta),
+    {
+      '@type': 'WebPage',
+      '@id': site.url + (meta.path === '/' ? '/' : meta.path) + '#webpage',
+      url: site.url + (meta.path === '/' ? '' : meta.path),
+      name: meta.title,
+      description: meta.description,
+      isPartOf: { '@id': SITE_ID },
+      about: { '@id': ORG_ID },
+      dateModified: lastUpdated,
+      inLanguage: 'en-IN',
+    },
+  ]
   const faq = faqSchema(faqItems)
   if (faq) nodes.push(faq)
   if (course) nodes.push(courseSchema(course, meta))

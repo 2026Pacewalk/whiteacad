@@ -214,6 +214,29 @@ export const resultImages = [
 ]
 
 // ---------------------------------------------------------------------------
+// EEAT — founder / author identity.
+//
+// ⚠️ FILL THESE IN with J.P. Brar's REAL details. They are intentionally left
+// empty rather than guessed: inventing qualifications for a real person is both
+// dishonest and an EEAT liability if a reader or Google checks them.
+// Any field left empty/null simply does not render and is omitted from schema.
+// ---------------------------------------------------------------------------
+export const founder = {
+  name: 'J.P. Brar',
+  role: 'Founder & Director',
+  photo: null,                 // e.g. '/images/jp-brar.jpg'
+  // Known from the academy's own website copy:
+  quote: 'Helping a student reach his/her full potential.',
+  bio: '',                     // e.g. 'J.P. Brar founded Whitehawk Academy in <year>...'
+  credentials: [],             // e.g. ['M.Sc. Physics, Punjabi University', '15+ years teaching JEE/NEET Physics']
+  yearsExperience: null,       // e.g. 15
+  sameAs: [],                  // e.g. ['https://www.linkedin.com/in/...']
+}
+
+// Content freshness signal (shown as "Last updated" + used in schema dateModified)
+export const lastUpdated = '2026-07-15'
+
+// ---------------------------------------------------------------------------
 // Local SEO data (powers LocalBusiness / EducationalOrganization schema)
 // Coordinates taken from the academy's Google Maps listing.
 // ---------------------------------------------------------------------------
@@ -317,6 +340,22 @@ export const seo = {
     description: 'Full list of pages on the Whitehawk Academy website — quick links to every section and course.',
     image: '/images/slider-1.jpg',
     breadcrumb: [{ name: 'Sitemap', path: '/sitemap' }],
+  },
+  privacy: {
+    path: '/privacy-policy',
+    title: 'Privacy Policy | Whitehawk Academy Bathinda',
+    description:
+      'How Whitehawk Academy, Bathinda collects, uses and protects the information you share through our enquiry and registration forms.',
+    image: '/images/slider-1.jpg',
+    breadcrumb: [{ name: 'Privacy Policy', path: '/privacy-policy' }],
+  },
+  terms: {
+    path: '/terms',
+    title: 'Terms of Use | Whitehawk Academy Bathinda',
+    description:
+      'The terms and conditions that apply when you use the Whitehawk Academy website, enquiry forms and course information.',
+    image: '/images/slider-1.jpg',
+    breadcrumb: [{ name: 'Terms of Use', path: '/terms' }],
   },
 }
 

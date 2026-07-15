@@ -588,6 +588,52 @@ table.course-table { width: 100%; border-collapse: collapse; min-width: 560px; }
 .faq-a p { padding: 0 20px 18px; color: var(--body); margin: 0; }
 
 /* ==========================================================================
+   EEAT — last updated, founder bio, legal pages
+   ========================================================================== */
+.last-updated {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .84rem; color: var(--muted); margin-top: 18px;
+}
+.last-updated svg { color: var(--red); flex: none; }
+.last-updated time { font-weight: 600; color: var(--body); }
+
+.founder-section { background: var(--surface-2); }
+.founder-card {
+  display: grid; grid-template-columns: 190px 1fr; gap: clamp(20px, 4vw, 40px);
+  align-items: center; background: #fff; border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: clamp(22px, 4vw, 38px); box-shadow: var(--sh-md);
+  max-width: 900px; margin: 0 auto;
+}
+.founder-card__media img,
+.founder-card__avatar {
+  width: 100%; aspect-ratio: 1; border-radius: var(--r-lg); object-fit: cover;
+}
+.founder-card__avatar {
+  display: grid; place-items: center; background: var(--grad-navy); color: rgba(255,255,255,.5);
+}
+.founder-card__name { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin-top: 8px; }
+.founder-card__role { color: var(--red); font-family: var(--font-head); font-weight: 600; font-size: .95rem; margin-bottom: 12px; }
+.founder-card__quote {
+  border-left: 3px solid var(--red); padding-left: 14px; margin: 0 0 12px;
+  font-style: italic; color: var(--navy); display: flex; gap: 8px; align-items: flex-start;
+}
+.founder-card__quote svg { color: var(--red); flex: none; margin-top: 4px; }
+.founder-card__creds { display: grid; gap: 8px; margin-top: 14px; }
+.founder-card__creds li { display: flex; align-items: center; gap: 9px; font-size: .92rem; color: var(--body); }
+.founder-card__creds svg { color: var(--red); flex: none; }
+
+.legal { max-width: 780px; }
+.legal h2 { font-size: 1.3rem; color: var(--navy); margin: 30px 0 10px; }
+.legal p { margin-bottom: 12px; }
+.legal ul { display: grid; gap: 7px; margin: 0 0 14px; padding-left: 20px; list-style: disc; }
+.legal li { color: var(--body); }
+.legal a { color: var(--red); font-weight: 500; text-decoration: underline; text-underline-offset: 2px; }
+.legal__note {
+  background: var(--surface-2); border: 1px solid var(--line); border-left: 4px solid var(--navy);
+  border-radius: var(--r-sm); padding: 14px 16px; font-size: .9rem; margin: 26px 0;
+}
+
+/* ==========================================================================
    Footer
    ========================================================================== */
 .footer { background: var(--navy-900); color: #c7d0e6; position: relative; }
@@ -619,6 +665,10 @@ table.course-table { width: 100%; border-collapse: collapse; min-width: 560px; }
 @media (min-width: 641px) { .footer__bottom-inner { padding-right: 80px; } }
 .footer__dev a { color: #fff; font-weight: 700; font-family: var(--font-head); }
 .footer__dev a:hover { color: #ff738a; }
+.footer__legal { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.footer__legal a { transition: color .2s; }
+.footer__legal a:hover { color: #fff; text-decoration: underline; }
+.footer__legal span { opacity: .4; }
 
 /* ==========================================================================
    WhatsApp float

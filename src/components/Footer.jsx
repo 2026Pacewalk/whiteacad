@@ -80,6 +80,13 @@ export default function Footer() {
       <div className="footer__bottom">
         <div className="container footer__bottom-inner">
           <p>&copy; {year} {site.name}. All Rights Reserved.</p>
+          <nav className="footer__legal" aria-label="Legal">
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <span aria-hidden="true">·</span>
+            <Link to="/terms">Terms of Use</Link>
+            <span aria-hidden="true">·</span>
+            <Link to="/sitemap">Sitemap</Link>
+          </nav>
           <p className="footer__dev">
             Developed by{' '}
             <a href={site.developer.url} target="_blank" rel="noopener noreferrer">{site.developer.name}</a>

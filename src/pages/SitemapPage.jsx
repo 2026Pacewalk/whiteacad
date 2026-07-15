@@ -27,6 +27,8 @@ const groups = [
     title: 'Resources',
     links: [
       { label: 'HTML Sitemap', to: '/sitemap' },
+      { label: 'Privacy Policy', to: '/privacy-policy' },
+      { label: 'Terms of Use', to: '/terms' },
       { label: 'Student Login', href: 'https://whitehawkacademy.speedlabs.in/LoginWHAB.aspx' },
     ],
   },
