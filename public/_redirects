@@ -1,0 +1,17 @@
+# --- 301s from the old PHP URLs to the new routes (preserves Google rankings) ---
+/index.php                                          /                             301
+/about-whitehawk-academy.php                        /about                        301
+/engineering-whitehawk-academy.php                  /engineering                  301
+/medical-whitehawk-academy.php                      /medical                      301
+/foundation-courses-whitehawk-academy.php           /foundation-courses           301
+/distance-education-program-whitehawk-academy.php   /distance-education-program   301
+/gallery-whitehawk-academy.php                      /gallery                      301
+/successful-whitehawk-academy.php                   /results                      301
+/contact-whitehawk-academy.php                      /contact                      301
+
+# Old junk / compromised paths -> home (kills the spam URLs still in Google's index)
+/old/*                                              /                             301
+/otdo_panel/*                                       /                             301
+
+# --- SPA fallback (must stay last; real files & prerendered pages win over this) ---
+/*                                                  /index.html                   200

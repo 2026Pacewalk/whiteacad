@@ -1,0 +1,20 @@
+# dependencies
+node_modules
+
+# build output
+dist
+dist-ssr
+*.zip
+
+# local / tooling state
+.wrangler
+.vite
+*.local
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode
+.idea

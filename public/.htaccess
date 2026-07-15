@@ -1,0 +1,35 @@
+# Whitehawk Academy — React SPA (Apache / LiteSpeed)
+Options -MultiViews
+RewriteEngine On
+RewriteBase /
+
+# Force HTTPS (safe behind Cloudflare)
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Serve real files and directories as-is (prerendered /about/index.html, assets, images)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Single-page-app fallback: everything else to index.html
+RewriteRule ^ index.html [L]
+
+# --- Caching ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# --- Security headers ---
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
