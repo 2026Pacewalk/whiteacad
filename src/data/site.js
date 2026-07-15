@@ -82,11 +82,34 @@ export const stats = [
   { value: 10, suffix: '+', label: 'Courses Offered' },
 ]
 
-export const testimonials = [
-  { name: 'Arun Verma', role: 'Student', quote: 'I have learned so much and got so much out of the training at Whitehawk Academy.' },
-  { name: 'Muskan', role: 'Student', quote: 'It was one of the best learning experiences I have ever had.' },
-  { name: 'Lokesh', role: 'Student', quote: 'The faculty pay personal attention to every student. Truly the best academy near me.' },
-]
+// ---------------------------------------------------------------------------
+// Google reviews — REAL, read from the academy's Google Business Profile
+// (CID 10420604750319060488 / feature id 0x391732aeefab33f1:0x909d6ccf47840608).
+//
+// ⚠️ Displayed as text with attribution + a link to verify on Google. These are
+// intentionally NOT marked up as Review/AggregateRating schema: Google treats a
+// review about entity A hosted on entity A's own site as "self-serving", which
+// is ineligible for star rich results and risks a manual action.
+// See: developers.google.com/search/docs/appearance/structured-data/review-snippet
+//
+// Per-review star counts are not asserted because they weren't verifiable from
+// the listing — only the overall 4.8 aggregate is, and that is linked to source.
+// ---------------------------------------------------------------------------
+export const googleReviews = {
+  rating: 4.8,
+  count: 46,
+  profileUrl: 'https://maps.google.com/?cid=10420604750319060488',
+  reviewUrl:
+    'https://www.google.com/maps/place//data=!4m3!3m2!1s0x391732aeefab33f1:0x909d6ccf47840608!12e1',
+  items: [
+    { name: 'Chirag Goyal', meta: '2 reviews', quote: 'A good place to learn more from the best teacher' },
+    { name: 'Shin Chan', meta: 'Local Guide · 17 reviews', quote: 'Really nice teachers and a very cozy environment to study.' },
+    { name: 'Kartik Garg', meta: 'Local Guide · 23 reviews', quote: 'Very good institute for learning in Bathinda. Toppest' },
+    { name: 'Ishanvi', meta: '4 reviews', quote: 'Amazing very good teaching + good material. Superb ✌' },
+    { name: 'Rajveer', meta: 'Local Guide · 10 reviews', quote: 'You can’t find better teacher anywhere else 😄' },
+    { name: 'ARIK VERMA', meta: 'Local Guide · 14 reviews', quote: 'A good place to learn more' },
+  ],
+}
 
 // ---------------------------------------------------------------------------
 // Courses (shared by cards + detail pages)

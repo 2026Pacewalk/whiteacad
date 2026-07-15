@@ -10,8 +10,9 @@ import Counter from '../components/Counter.jsx'
 import EnquiryForm from '../components/EnquiryForm.jsx'
 import Faq from '../components/Faq.jsx'
 import AnswerBlock from '../components/AnswerBlock.jsx'
+import Reviews from '../components/Reviews.jsx'
 import {
-  site, seo, slides, features, stats, testimonials, courseList, galleryImages,
+  site, seo, slides, features, stats, courseList, galleryImages,
   answers, faqs,
 } from '../data/site.js'
 
@@ -188,30 +189,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Registration + Testimonials */}
-      <section className="section testi">
-        <div className="container">
-          <div className="center-head text-center">
-            <span className="eyebrow" style={{ justifyContent: 'center', color: '#ff738a' }}>Testimonials</span>
-            <h2 className="section-title" style={{ color: '#fff' }}>Our Students <span className="accent">Say</span></h2>
-          </div>
-          <div className="testi-grid">
-            {testimonials.map((t, i) => (
-              <Reveal className="testi-card" key={t.name} delay={i * 80}>
-                <Quote className="quote-ic" aria-hidden="true" />
-                <p>“{t.quote}”</p>
-                <div className="stars" aria-label="5 out of 5 stars">
-                  {Array.from({ length: 5 }).map((_, k) => <Star key={k} aria-hidden="true" />)}
-                </div>
-                <div className="who">
-                  <div className="avatar">{t.name[0]}</div>
-                  <div><b>{t.name}</b><span>{t.role}</span></div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Real Google reviews + "Review us" CTA */}
+      <Reviews />
 
       {/* Gallery preview */}
       <section className="section">

@@ -1,9 +1,9 @@
-import { MapPin, Phone, Mail, Clock } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Star } from 'lucide-react'
 import Seo from '../components/Seo.jsx'
 import PageHero from '../components/PageHero.jsx'
 import Reveal from '../components/Reveal.jsx'
 import EnquiryForm from '../components/EnquiryForm.jsx'
-import { site, seo } from '../data/site.js'
+import { site, seo, googleReviews } from '../data/site.js'
 
 export default function Contact() {
   return (
@@ -35,6 +35,16 @@ export default function Contact() {
               </div>
             </div>
             <iframe className="map-frame" src={site.mapEmbed} title="Whitehawk Academy location on Google Maps" loading="lazy" style={{ marginTop: 18 }} referrerPolicy="no-referrer-when-downgrade" />
+
+            <div className="contact-review">
+              <p>
+                Studied with us? A review on Google genuinely helps other students in Bathinda find
+                the academy.
+              </p>
+              <a className="btn btn-outline btn-sm" href={googleReviews.reviewUrl} target="_blank" rel="noopener noreferrer">
+                <Star aria-hidden="true" /> Review us on Google
+              </a>
+            </div>
           </Reveal>
 
           <Reveal className="side-card side-form" delay={100}>
